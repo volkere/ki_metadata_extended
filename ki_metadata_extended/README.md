@@ -13,7 +13,7 @@ Features:
 docker-compose up --build
 ```
 
-- API: http://localhost:8000
+- API: http://localhost:8000/docs
 - Streamlit UI: http://localhost:8501
 - Neo4j: http://localhost:7474 (neo4j / password)
 - minIO: http://localhost:9001 (minioadmin / minioadmin)
