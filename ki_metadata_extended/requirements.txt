@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pillow
+transformers
+torch
+deepface
+opencv-python-headless
+neo4j
+tf-keras
+python-multipart
+streamlit
+plotly
+boto3
