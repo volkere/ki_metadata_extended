@@ -1,0 +1,48 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment files
+.env
+*.env
+
+# Logs
+logs/
+*.log
+
+# Docker volumes / build artifacts
+neo4j-data/
+minio-data/
+*.pid
+*.sock
+
+# Python virtual environments
+venv/
+.venv/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# VSCode settings (optional)
+.vscode/
+
+# Streamlit cache
+.streamlit/
+
+# Pytest cache
+.pytest_cache/
+
+# Backup files
+*~
+*.bak
+
+# Git conflict markers (optional safety net)
+*.orig
+
+# Node.js (falls Web-Frontend später ergänzt)
+node_modules/
