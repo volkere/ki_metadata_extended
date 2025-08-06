@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from app.pipeline.process_image import process_image
 from app.utils.logger import log_upload
 import traceback
+import json
 
 app = FastAPI(
     title="KI Metadata Extended API",
@@ -32,6 +33,18 @@ async def upload_image(file: UploadFile = File(...)):
         
         log_upload(file.filename)
         result = process_image(contents)
+        
+        # Ensure result is JSON serializable
+        try:
+            # Test JSON serialization
+            json.dumps(result)
+        except (TypeError, ValueError) as e:
+            # If serialization fails, convert to string representation
+            result = {
+                "error": "Data serialization error",
+                "details": str(result),
+                "original_error": str(e)
+            }
         
         return JSONResponse(
             status_code=200,

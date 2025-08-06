@@ -5,6 +5,7 @@ from PIL import Image
 import io
 import tempfile
 import os
+import numpy as np
 from neo4j import GraphDatabase
 from app.utils.logger import log_metadata
 
@@ -15,6 +16,23 @@ NEO4J_URI = "bolt://neo4j:7687"
 NEO4J_USER = "neo4j"
 NEO4J_PASS = "password"
 driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASS))
+
+def convert_to_json_serializable(obj):
+    """Convert objects to JSON serializable format"""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, dict):
+        return {key: convert_to_json_serializable(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_to_json_serializable(item) for item in obj]
+    elif isinstance(obj, torch.Tensor):
+        return obj.tolist()
+    else:
+        return obj
 
 def store_metadata_to_neo4j(caption, age, gender):
     try:
@@ -49,6 +67,9 @@ def process_image(image_bytes):
                 os.unlink(tmp_file.name)  # Clean up temp file
         except Exception as e:
             face_info = {"error": str(e)}
+
+        # Convert face_info to JSON serializable format
+        face_info = convert_to_json_serializable(face_info)
 
         # Store in Neo4j
         store_metadata_to_neo4j(caption, face_info.get("age"), face_info.get("gender"))

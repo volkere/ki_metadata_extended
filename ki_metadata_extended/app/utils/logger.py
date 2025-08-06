@@ -1,10 +1,26 @@
 from datetime import datetime
 import json
 import os
+import numpy as np
 
 def ensure_log_directory():
     """Ensure the logs directory exists"""
     os.makedirs("/logs", exist_ok=True)
+
+def convert_to_json_serializable(obj):
+    """Convert objects to JSON serializable format"""
+    if isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, dict):
+        return {key: convert_to_json_serializable(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_to_json_serializable(item) for item in obj]
+    else:
+        return obj
 
 def log_upload(filename):
     ensure_log_directory()
@@ -17,10 +33,10 @@ def log_upload(filename):
 def log_metadata(caption, face_info):
     ensure_log_directory()
     try:
-        # Convert data to JSON for better serialization
+        # Convert data to JSON serializable format
         log_data = {
             "caption": caption,
-            "face_info": face_info
+            "face_info": convert_to_json_serializable(face_info)
         }
         
         with open("/logs/analysis.log", "a", encoding="utf-8") as f:
@@ -39,7 +55,7 @@ def log_error(error_message, details=None):
     try:
         error_data = {
             "error": error_message,
-            "details": details
+            "details": convert_to_json_serializable(details) if details else None
         }
         
         with open("/logs/errors.log", "a", encoding="utf-8") as f:
