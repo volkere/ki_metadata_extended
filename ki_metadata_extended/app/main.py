@@ -51,7 +51,8 @@ async def upload_image(file: UploadFile = File(...)):
             content={
                 "filename": file.filename,
                 "size": len(contents),
-                "analysis": result
+                "analysis": result,
+                "disclaimer": "AI analysis results may contain errors. Gender and age predictions are estimates based on facial features and may not be accurate in all cases."
             }
         )
     except HTTPException:

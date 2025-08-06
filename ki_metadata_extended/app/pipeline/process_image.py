@@ -34,6 +34,37 @@ def convert_to_json_serializable(obj):
     else:
         return obj
 
+def validate_gender_prediction(gender_data, confidence_threshold=0.7):
+    """Validate and potentially correct gender predictions"""
+    if not isinstance(gender_data, dict):
+        return gender_data
+    
+    # Check if we have confidence values
+    if 'Woman' in gender_data and 'Man' in gender_data:
+        woman_conf = float(gender_data['Woman'])
+        man_conf = float(gender_data['Man'])
+        
+        # If confidence difference is small, mark as uncertain
+        if abs(woman_conf - man_conf) < 20:  # Less than 20% difference
+            return {
+                "Woman": woman_conf,
+                "Man": man_conf,
+                "dominant_gender": "Uncertain",
+                "confidence_difference": abs(woman_conf - man_conf)
+            }
+        
+        # If confidence is too low, mark as uncertain
+        max_conf = max(woman_conf, man_conf)
+        if max_conf < confidence_threshold * 100:
+            return {
+                "Woman": woman_conf,
+                "Man": man_conf,
+                "dominant_gender": "Low_Confidence",
+                "max_confidence": max_conf
+            }
+    
+    return gender_data
+
 def store_metadata_to_neo4j(caption, age, gender):
     try:
         with driver.session() as session:
@@ -65,6 +96,11 @@ def process_image(image_bytes):
                 face_result = DeepFace.analyze(img_path=tmp_file.name, actions=['age', 'gender'], enforce_detection=False)
                 face_info = face_result[0] if isinstance(face_result, list) else face_result
                 os.unlink(tmp_file.name)  # Clean up temp file
+                
+                # Validate and improve gender prediction
+                if 'gender' in face_info:
+                    face_info['gender'] = validate_gender_prediction(face_info['gender'])
+                    
         except Exception as e:
             face_info = {"error": str(e)}
 
