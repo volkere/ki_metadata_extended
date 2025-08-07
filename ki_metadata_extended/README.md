@@ -160,3 +160,39 @@ Dieses Projekt ist für Bildungs- und Forschungszwecke konzipiert.
 ## 📞 Support
 
 Bei Fragen oder Problemen erstellen Sie bitte ein Issue im Repository.
+
+## 🧑‍💻 Custom Model Training
+
+You can train your own AI models for age and gender prediction using your own dataset. Example scripts are provided for both PyTorch and TensorFlow/Keras in the `training/` directory.
+
+### Dataset Structure
+```
+dataset/
+  train/
+    images/
+      img1.jpg
+      img2.jpg
+      ...
+    labels.csv  # columns: filename,age,gender
+  val/
+    images/
+    labels.csv
+```
+
+### PyTorch Training
+- See: `training/train_age_gender_pytorch.py`
+- Trains a simple CNN for age (regression) and gender (classification)
+- Saves model as `age_gender_model.pth`
+
+### TensorFlow/Keras Training
+- See: `training/train_age_gender_keras.py`
+- Trains a simple CNN for age (regression) and gender (classification)
+- Saves model as `age_gender_model_keras.h5`
+
+### How to Use
+1. Prepare your dataset as above
+2. Adjust batch size, epochs, and model complexity as needed
+3. Run the script for your preferred framework
+4. Use the trained model for inference or integrate it into your app
+
+For more advanced use (transfer learning, more metadata fields, etc.), see comments in the scripts or ask for help!
