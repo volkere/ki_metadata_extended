@@ -2,7 +2,7 @@
 
 Ein fortschrittliches System zur automatischen Bildanalyse mit KI-gestützter Metadatenextraktion.
 
-## 🚀 Features
+*Features
 
 - **FastAPI Backend** mit DeepFace und CLIP Integration
 - **Streamlit UI** mit interaktiver Zeitachsen-Ansicht und Statistiken
@@ -11,7 +11,7 @@ Ein fortschrittliches System zur automatischen Bildanalyse mit KI-gestützter Me
 - **Umfassendes Logging** von Uploads und Analysen
 - **Robuste Fehlerbehandlung** und Validierung
 
-## 🛠️ Technologie-Stack
+*Technologie-Stack
 
 - **Backend**: FastAPI, Uvicorn
 - **AI/ML**: DeepFace, CLIP (OpenAI), Transformers
@@ -20,34 +20,34 @@ Ein fortschrittliches System zur automatischen Bildanalyse mit KI-gestützter Me
 - **Frontend**: Streamlit, Plotly
 - **Container**: Docker & Docker Compose
 
-## 📋 Voraussetzungen
+*Voraussetzungen
 
 - Docker und Docker Compose
 - Mindestens 4GB RAM (für ML-Modelle)
 - Internetverbindung (für initiale Modell-Downloads)
 
-## 🚀 Installation & Start
+*Installation & Start
 
-1. **Repository klonen:**
+1. Repository klonen:
 ```bash
 git clone <repository-url>
 cd ki_metadata_extended
 ```
 
-2. **Services starten:**
+2. Services starten:
 ```bash
 docker-compose up --build
 ```
 
-3. **Services sind verfügbar unter:**
-- **API Documentation**: http://localhost:8000/docs
-- **Streamlit UI**: http://localhost:8501
-- **Neo4j Browser**: http://localhost:7474 (neo4j / password)
-- **minIO Console**: http://localhost:9001 (minioadmin / minioadmin)
+3. Services sind verfügbar unter:
+- API Documentation**: http://localhost:8000/docs
+- Streamlit UI**: http://localhost:8501
+- Neo4j Browser**: http://localhost:7474 (neo4j / password)
+- minIO Console**: http://localhost:9001 (minioadmin / minioadmin)
 
-## 📖 API Verwendung
+API Verwendung
 
-### Bild-Upload
+Bild-Upload
 ```bash
 curl -X POST "http://localhost:8000/upload/" \
      -H "accept: application/json" \
@@ -55,57 +55,57 @@ curl -X POST "http://localhost:8000/upload/" \
      -F "file=@your_image.jpg"
 ```
 
-### Health Check
+Health Check
 ```bash
 curl http://localhost:8000/health
 ```
 
-### Logs abrufen
+Logs abrufen
 ```bash
 curl http://localhost:8000/logs/uploads
 curl http://localhost:8000/logs/analysis
 ```
 
-## 🔧 Konfiguration
+Konfiguration
 
-### Umgebungsvariablen
+Umgebungsvariablen
 Die Standard-Konfiguration ist in `docker-compose.yml` definiert:
 
-- **Neo4j**: neo4j/password
-- **minIO**: minioadmin/minioadmin
-- **Ports**: 8000 (API), 8501 (Streamlit), 7474 (Neo4j), 9001 (minIO)
+- Neo4j: neo4j/password
+- minIO: minioadmin/minioadmin
+- Ports: 8000 (API), 8501 (Streamlit), 7474 (Neo4j), 9001 (minIO)
 
-### Daten-Persistierung
+Daten-Persistierung
 - Neo4j Daten: `./neo4j-data/`
 - minIO Daten: `./minio-data/`
 - Logs: `./logs/`
 
-## 📊 Funktionalitäten
+Funktionalitäten
 
-### Bildanalyse
-- **CLIP-basierte Bildklassifizierung** (Foto, Person, Performance)
-- **DeepFace Gesichtsanalyse** (Alter, Geschlecht)
-- **Automatische Metadatenextraktion**
+Bildanalyse
+- CLIP-basierte Bildklassifizierung** (Foto, Person, Performance)
+- DeepFace Gesichtsanalyse** (Alter, Geschlecht)
+- Automatische Metadatenextraktion**
 
-### Visualisierung
-- **Interaktive Timeline** der Analysen
-- **Statistiken** zu Alters- und Geschlechterverteilung
-- **Echtzeit-Updates** der Daten
+Visualisierung
+- Interaktive Timeline** der Analysen
+- Statistiken** zu Alters- und Geschlechterverteilung
+- Echtzeit-Updates** der Daten
 
-### Datenmanagement
-- **Graph-basierte Metadaten-Speicherung** in Neo4j
-- **Skalierbare Bildspeicherung** in minIO
-- **Umfassendes Logging** aller Operationen
+Datenmanagement
+- Graph-basierte Metadaten-Speicherung** in Neo4j
+- Skalierbare Bildspeicherung** in minIO
+- Umfassendes Logging** aller Operationen
 
-## 🐛 Troubleshooting
+Troubleshooting
 
-### Häufige Probleme
+Häufige Probleme
 
 1. **Port-Konflikte**: Stellen Sie sicher, dass die Ports 8000, 8501, 7474, 9001 frei sind
 2. **Speicherplatz**: ML-Modelle benötigen ~2GB Speicherplatz
 3. **RAM**: Mindestens 4GB RAM für stabile Performance
 
-### Logs überprüfen
+Logs überprüfen
 ```bash
 # Container-Logs
 docker-compose logs app
@@ -116,9 +116,9 @@ docker-compose exec app cat /logs/analysis.log
 docker-compose exec app cat /logs/uploads.log
 ```
 
-## 🔄 Entwicklung
+Entwicklung
 
-### Lokale Entwicklung
+Lokale Entwicklung
 ```bash
 # Dependencies installieren
 pip install -r requirements.txt
